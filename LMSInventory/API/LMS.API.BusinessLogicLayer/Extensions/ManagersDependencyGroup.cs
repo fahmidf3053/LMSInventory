@@ -12,6 +12,8 @@ namespace LMS.API.BusinessLogicLayer.Extensions
         {
             services.AddScoped<IJWTManager, JWTManager>();
             services.AddScoped<IStoreManager, StoreManager>();           
+            services.AddScoped<IRackManager, RackManager>();           
+            services.AddScoped<IElementManager, ElementManager>();           
 
             // register DataAccess
             services.AddDataAccessDependencyGroup();
