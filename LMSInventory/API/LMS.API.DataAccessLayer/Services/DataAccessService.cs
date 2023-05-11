@@ -17,32 +17,28 @@ namespace LMS.API.DataAccessLayer.Services
             _storeRepository = new StoreRepository();
         }
 
-
         public IQueryable<Store> GetAllStores()
         {
             return _storeRepository.GetAll().Include(r => r.Racks).Include("Racks.Elements");
         }
-
         public IQueryable<Store> GetAllStores(int pageSize, int pageNumber)
         {
-            return _storeRepository.GetAll().Include(x => x.Racks).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return _storeRepository.GetAll().Include(x => x.Racks).Include("Racks.Elements")
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
-
         public Store GetStoreById(int id)
         {
-            return _storeRepository.GetAll().Where(x => x.Id == id).Include(x => x.Racks).FirstOrDefault();
+            return _storeRepository.GetAll().Where(x => x.Id == id).Include(x => x.Racks)
+                .Include("Racks.Elements").FirstOrDefault();
         }
-
         public void UpdateStores(params Store[] stores)
         {
             _storeRepository.Update(stores);
         }
-
         public void AddStores(params Store[] stores)
         {
             _storeRepository.Add(stores);
         }
-
         public void DeleteStores(params Store[] stores)
         {
             _storeRepository.Remove(stores);

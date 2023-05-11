@@ -4,6 +4,9 @@ using LMS.API.DataAccessLayer.Models;
 using LMS.API.DataAccessLayer.Services;
 using LMS.API.DTOs.RequestDTOs;
 using LMS.API.DTOs.ResponseDTOs;
+using LMS.API.Exceptions;
+using static LMS.API.Utils.Constants;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace LMS.API.BusinessLogicLayer.Managers
 {
@@ -20,8 +23,6 @@ namespace LMS.API.BusinessLogicLayer.Managers
 
         public List<StoreResDTO> GetAllStores(int pageSize, int pageNumber)
         {
-
-            List<StoreResDTO> result = new();
             List<Store> stores = new();
 
             if (pageSize == 0 || pageNumber == 0)
@@ -33,7 +34,20 @@ namespace LMS.API.BusinessLogicLayer.Managers
                 stores = _dataAccessService.GetAllStores(pageSize, pageNumber).ToList();
             }
 
-            result = stores.Select(MapperService.ToStoreResDTOMap).ToList();
+            List<StoreResDTO> result = stores.Select(MapperService.ToStoreResDTOMap).ToList();
+
+            return result;
+        }
+
+        public StoreResDTO GetStoreById(int id)
+        {
+
+            Store store = _dataAccessService.GetStoreById(id);
+
+            if (store == null)
+                throw new StoreException(StoreExceptions.StoreInfoNotFound);
+
+            StoreResDTO result = MapperService.ToStoreResDTOMap(store);
 
             return result;
         }
@@ -41,11 +55,28 @@ namespace LMS.API.BusinessLogicLayer.Managers
         public StoreResDTO SaveStore(StoreReqDTO reqDTO)
         {
 
-           StoreResDTO result = new();
+            Store storeToBeAdded = MapperService.ToStoreModelMap(reqDTO);
 
+            storeToBeAdded.EntityState = EntityState.Added;
 
+            _dataAccessService.AddStores(storeToBeAdded);
+
+            if(storeToBeAdded.Id == 0)
+                throw new StoreException(StoreExceptions.StoreSaveFailed);
+
+            StoreResDTO result = MapperService.ToStoreResDTOMap(_dataAccessService.GetStoreById(storeToBeAdded.Id));
 
             return result;
+        }
+
+        public StoreResDTO EditStore(StoreReqDTO reqDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResponseDTO DeleteStore(int id)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion Public Methods

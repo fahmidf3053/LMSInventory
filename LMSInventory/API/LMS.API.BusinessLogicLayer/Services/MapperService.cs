@@ -1,4 +1,5 @@
 ﻿using LMS.API.DataAccessLayer.Models;
+using LMS.API.DTOs.RequestDTOs;
 using LMS.API.DTOs.ResponseDTOs;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -47,6 +48,19 @@ namespace LMS.API.BusinessLogicLayer.Services
                 Height = element.Height,
                 Width = element.Width,
                 RackName = element.Rack.Name
+            };
+        }
+
+        public static Store ToStoreModelMap(StoreReqDTO storeDTO)
+        {
+            if (storeDTO == null)
+                return new();
+
+            return new Store()
+            {
+                Id = 0,
+                Name = storeDTO.Name,
+                Country = storeDTO.Country
             };
         }
     }

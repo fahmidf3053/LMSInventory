@@ -117,7 +117,7 @@ namespace LMS.API.DataAccessLayer.Repositories
             {
                 if (disposing)
                 {
-                    // _context.Dispose();
+                    _context.Dispose();
                 }
             }
             disposed = true;

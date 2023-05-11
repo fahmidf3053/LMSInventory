@@ -69,7 +69,29 @@ namespace LMS.API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
+        [HttpPost("getStoreById")]
+        public IActionResult GetStoreById([Required] int id)
+        {
+            try
+            {
+                var stores = _productManager.GetStoreById(id);
+
+                return Ok(stores);
+            }
+            catch (StoreException ex)
+            {
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+            catch (Exception e)
+            {
+                StoreException ex = new(StoreExceptions.UnhandledError);
+
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+        }
+
+        //[Authorize]
         [HttpPost("saveStore")]
         public IActionResult SaveStore([Required] StoreReqDTO reqDTO)
         {

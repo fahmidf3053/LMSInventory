@@ -19,6 +19,9 @@
                 "StoreInfoNotFound", new List<string>(){"404", "Not Found", "Store Info Not Found." }
             },
             {
+                "StoreSaveFailed", new List<string>(){"400", "Bad Request", "Store Save Failed." }
+            },
+            {
                 "WrongStoreInfo", new List<string>(){"400", "Bad Request", "Wrong Store Info." }
             },
             {
@@ -30,6 +33,7 @@
     public static class StoreExceptions
     {
         public const string StoreInfoNotFound = "StoreInfoNotFound";
+        public const string StoreSaveFailed = "StoreSaveFailed";
         public const string WrongStoreInfo = "WrongStoreInfo";
         public const string UnhandledError = "UnhandledError";
     }
