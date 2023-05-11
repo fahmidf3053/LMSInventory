@@ -22,6 +22,9 @@
                 "RackSaveFailed", new List<string>(){"400", "Bad Request", "Couldn't Save the Rack." }
             },
             {
+                "InvalidStore", new List<string>(){"400", "Bad Request", "Invalid Store for Rack." }
+            },
+            {
                 "WrongRackInfo", new List<string>(){"400", "Bad Request", "Wrong Rack Info." }
             },
             {
@@ -37,6 +40,7 @@
     {
         public const string RackInfoNotFound = "RackInfoNotFound";
         public const string RackSaveFailed = "RackSaveFailed";
+        public const string InvalidStore = "InvalidStore";
         public const string WrongRackInfo = "WrongRackInfo";
         public const string RackDeleteFailed = "RackDeleteFailed";
         public const string UnhandledError = "UnhandledError";

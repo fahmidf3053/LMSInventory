@@ -15,7 +15,7 @@ namespace LMS.API.DataAccessLayer.Models
         [Column(TypeName = "varchar(200)")]
         public string Name { get; set; }
 
-        public int QuantityOfRack { get; set; }
+        public int QuantityOfRacks { get; set; }
 
         public int StoreId { get; set; }
 

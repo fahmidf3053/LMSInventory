@@ -30,7 +30,7 @@ namespace LMS.API.BusinessLogicLayer.Services
             {
                 Id = rack.Id,
                 Name = rack.Name,
-                QuantityOfRacks = rack.QuantityOfRack,
+                QuantityOfRacks = rack.QuantityOfRacks,
                 StoreName = rack.Store.Name,
                 Elements = rack.Elements.Select(ToElementResDTOMap).ToList()
             };
@@ -61,6 +61,33 @@ namespace LMS.API.BusinessLogicLayer.Services
                 Id = 0,
                 Name = reqDTO.Name,
                 Country = reqDTO.Country
+            };
+        }
+
+        public static Rack ToRackModelMap(RackReqDTO reqDTO)
+        {
+            if (reqDTO == null)
+                return new();
+
+            return new Rack()
+            {
+                Id = 0,
+                Name = reqDTO.Name,
+                QuantityOfRacks = reqDTO.QuantityOfRacks
+            };
+        }
+
+        public static Element ToElementModelMap(ElementReqDTO reqDTO)
+        {
+            if (reqDTO == null)
+                return new();
+
+            return new Element()
+            {
+                Id = 0,
+                Name = reqDTO.Name,
+                Height = reqDTO.Height,
+                Width = reqDTO.Width
             };
         }
     }

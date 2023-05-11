@@ -25,6 +25,12 @@
                 "WrongElementInfo", new List<string>(){"400", "Bad Request", "Wrong Element Info." }
             },
             {
+                "InvalidRack", new List<string>(){"400", "Bad Request", "Invalid Rack for Element." }
+            },
+            {
+                "RackFull", new List<string>(){"400", "Bad Request", "Rack is already full. Couldn't Save the Element." }
+            },
+            {
                 "ElementDeleteFailed", new List<string>(){"400", "Bad Request", "Couldn't Delete the Element." }
             },
             {
@@ -38,6 +44,8 @@
         public const string ElementInfoNotFound = "ElementInfoNotFound";
         public const string ElementSaveFailed = "ElementSaveFailed";
         public const string WrongElementInfo = "WrongElementInfo";
+        public const string InvalidRack = "InvalidRack";
+        public const string RackFull = "RackFull";
         public const string ElementDeleteFailed = "ElementDeleteFailed";
         public const string UnhandledError = "UnhandledError";
     }
