@@ -73,7 +73,8 @@ namespace LMS.API.BusinessLogicLayer.Services
             {
                 Id = 0,
                 Name = reqDTO.Name,
-                QuantityOfRacks = reqDTO.QuantityOfRacks
+                QuantityOfRacks = reqDTO.QuantityOfRacks,
+                StoreId = reqDTO.StoreId
             };
         }
 
@@ -87,7 +88,8 @@ namespace LMS.API.BusinessLogicLayer.Services
                 Id = 0,
                 Name = reqDTO.Name,
                 Height = reqDTO.Height,
-                Width = reqDTO.Width
+                Width = reqDTO.Width,
+                RackId = reqDTO.RackId
             };
         }
     }

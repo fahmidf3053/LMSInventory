@@ -51,15 +51,17 @@ namespace LMS.API.DataAccessLayer.Services
 
         public IQueryable<Rack> GetAllRacks()
         {
-            return _rackRepository.GetAll().Include(r => r.Elements);
+            return _rackRepository.GetAll().Include(r => r.Elements).Include(r => r.Store);
         }
         public IQueryable<Rack> GetAllRacks(int pageSize, int pageNumber)
         {
-            return _rackRepository.GetAll().Include(x => x.Elements).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return _rackRepository.GetAll().Include(x => x.Elements).Include(r => r.Store)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
         public Rack GetRackById(int id)
         {
-            return _rackRepository.GetAll().Where(x => x.Id == id).Include(x => x.Elements).FirstOrDefault();
+            return _rackRepository.GetAll().Where(x => x.Id == id).Include(x => x.Elements)
+                .Include(r => r.Store).FirstOrDefault();
         }
         public void UpdateRacks(params Rack[] racks)
         {
@@ -77,15 +79,15 @@ namespace LMS.API.DataAccessLayer.Services
 
         public IQueryable<Element> GetAllElements()
         {
-            return _elementRepository.GetAll();
+            return _elementRepository.GetAll().Include(e => e.Rack);
         }
         public IQueryable<Element> GetAllElements(int pageSize, int pageNumber)
         {
-            return _elementRepository.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return _elementRepository.GetAll().Include(e => e.Rack).Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
         public Element GetElementById(int id)
         {
-            return _elementRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
+            return _elementRepository.GetAll().Include(e => e.Rack).Where(x => x.Id == id).FirstOrDefault();
         }
         public void UpdateElements(params Element[] elements)
         {
