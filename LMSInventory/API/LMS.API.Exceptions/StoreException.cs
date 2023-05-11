@@ -19,10 +19,13 @@
                 "StoreInfoNotFound", new List<string>(){"404", "Not Found", "Store Info Not Found." }
             },
             {
-                "StoreSaveFailed", new List<string>(){"400", "Bad Request", "Store Save Failed." }
+                "StoreSaveFailed", new List<string>(){"400", "Bad Request", "Couldn't Save the Store." }
             },
             {
                 "WrongStoreInfo", new List<string>(){"400", "Bad Request", "Wrong Store Info." }
+            },
+            {
+                "StoreDeleteFailed", new List<string>(){"400", "Bad Request", "Couldn't Delete the Store." }
             },
             {
                 "UnhandledError", new List<string>(){"500", "Server Error", "Internal Server Error." }
@@ -35,6 +38,7 @@
         public const string StoreInfoNotFound = "StoreInfoNotFound";
         public const string StoreSaveFailed = "StoreSaveFailed";
         public const string WrongStoreInfo = "WrongStoreInfo";
+        public const string StoreDeleteFailed = "StoreDeleteFailed";
         public const string UnhandledError = "UnhandledError";
     }
 }

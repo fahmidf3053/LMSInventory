@@ -6,7 +6,6 @@ using LMS.API.DTOs.RequestDTOs;
 using LMS.API.DTOs.ResponseDTOs;
 using LMS.API.Exceptions;
 using static LMS.API.Utils.Constants;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace LMS.API.BusinessLogicLayer.Managers
 {
@@ -71,12 +70,43 @@ namespace LMS.API.BusinessLogicLayer.Managers
 
         public StoreResDTO EditStore(StoreReqDTO reqDTO)
         {
-            throw new NotImplementedException();
+            Store storeToBeUpdated = _dataAccessService.GetStoreById(reqDTO.Id);
+
+            if (storeToBeUpdated == null)
+                throw new StoreException(StoreExceptions.WrongStoreInfo);
+
+            storeToBeUpdated.Name = reqDTO.Name;
+            storeToBeUpdated.Country = reqDTO.Country;
+            storeToBeUpdated.EntityState = EntityState.Modified;
+
+            _dataAccessService.UpdateStores(storeToBeUpdated);
+
+            StoreResDTO result = MapperService.ToStoreResDTOMap(_dataAccessService.GetStoreById(storeToBeUpdated.Id));
+
+            return result;
         }
 
         public ResponseDTO DeleteStore(int id)
         {
-            throw new NotImplementedException();
+            Store storeToBeDeleted = _dataAccessService.GetStoreById(id);
+
+            if (storeToBeDeleted == null)
+                throw new StoreException(StoreExceptions.WrongStoreInfo);
+
+            storeToBeDeleted.EntityState = EntityState.Deleted;
+
+            _dataAccessService.DeleteStores(storeToBeDeleted);
+
+            Store store = _dataAccessService.GetStoreById(id);
+
+            if (store != null)
+                throw new StoreException(StoreExceptions.StoreDeleteFailed);
+
+            return new ResponseDTO
+            {
+                Status = SUCCESS_CODE,
+                Message = SUCCESS_MSG
+            };
         }
 
         #endregion Public Methods

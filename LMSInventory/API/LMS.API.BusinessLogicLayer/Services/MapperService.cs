@@ -51,16 +51,16 @@ namespace LMS.API.BusinessLogicLayer.Services
             };
         }
 
-        public static Store ToStoreModelMap(StoreReqDTO storeDTO)
+        public static Store ToStoreModelMap(StoreReqDTO reqDTO)
         {
-            if (storeDTO == null)
+            if (reqDTO == null)
                 return new();
 
             return new Store()
             {
                 Id = 0,
-                Name = storeDTO.Name,
-                Country = storeDTO.Country
+                Name = reqDTO.Name,
+                Country = reqDTO.Country
             };
         }
     }

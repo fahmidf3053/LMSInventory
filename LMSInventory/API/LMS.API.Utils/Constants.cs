@@ -4,6 +4,9 @@
     {
         public const string VALUE_SEPARATOR = "||";
 
+        public const int SUCCESS_CODE = 200;
+        public const string SUCCESS_MSG = "Success";
+
         public static class DatabaseUtils
         {
             public static string SQL_CONNECTION_STRING = string.Empty;

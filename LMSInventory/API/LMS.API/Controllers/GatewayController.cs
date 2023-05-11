@@ -112,5 +112,48 @@ namespace LMS.API.Controllers
                 return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
             }
         }
+
+        //[Authorize]
+        [HttpPost("editStore")]
+        public IActionResult EditStore([Required] StoreReqDTO reqDTO)
+        {
+            try
+            {
+                var store = _productManager.EditStore(reqDTO);
+
+                return Ok(store);
+            }
+            catch (StoreException ex)
+            {
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+            catch (Exception e)
+            {
+                StoreException ex = new(StoreExceptions.UnhandledError);
+
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+        }
+
+        [HttpPost("deleteStore")]
+        public IActionResult DeleteStore([Required] int id)
+        {
+            try
+            {
+                var response = _productManager.DeleteStore(id);
+
+                return Ok(response);
+            }
+            catch (StoreException ex)
+            {
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+            catch (Exception e)
+            {
+                StoreException ex = new(StoreExceptions.UnhandledError);
+
+                return Problem(detail: ex.StatusMessage, statusCode: ex.StatusCode, title: ex.Title);
+            }
+        }
     }
 }
