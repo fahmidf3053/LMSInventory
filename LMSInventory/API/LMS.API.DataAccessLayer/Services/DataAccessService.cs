@@ -10,12 +10,16 @@ namespace LMS.API.DataAccessLayer.Services
     public class DataAccessService : IDataAccessService, IDisposable
     {
         private readonly IStoreRepository _storeRepository;
-
+        private readonly IRackRepository _rackRepository;
+        private readonly IElementRepository _elementRepository;
 
         public DataAccessService()
         {
             _storeRepository = new StoreRepository();
+            _rackRepository = new RackRepository();
+            _elementRepository = new ElementRepository();
         }
+
 
         public IQueryable<Store> GetAllStores()
         {
@@ -43,6 +47,59 @@ namespace LMS.API.DataAccessLayer.Services
         {
             _storeRepository.Remove(stores);
         }
+
+
+        public IQueryable<Rack> GetAllRacks()
+        {
+            return _rackRepository.GetAll().Include(r => r.Elements);
+        }
+        public IQueryable<Rack> GetAllRacks(int pageSize, int pageNumber)
+        {
+            return _rackRepository.GetAll().Include(x => x.Elements).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+        }
+        public Rack GetRackById(int id)
+        {
+            return _rackRepository.GetAll().Where(x => x.Id == id).Include(x => x.Elements).FirstOrDefault();
+        }
+        public void UpdateRacks(params Rack[] racks)
+        {
+            _rackRepository.Update(racks);
+        }
+        public void AddRacks(params Rack[] racks)
+        {
+            _rackRepository.Add(racks);
+        }
+        public void DeleteRacks(params Rack[] racks)
+        {
+            _rackRepository.Remove(racks);
+        }
+
+
+        public IQueryable<Element> GetAllElements()
+        {
+            return _elementRepository.GetAll();
+        }
+        public IQueryable<Element> GetAllElements(int pageSize, int pageNumber)
+        {
+            return _elementRepository.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize);
+        }
+        public Element GetElementById(int id)
+        {
+            return _elementRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
+        }
+        public void UpdateElements(params Element[] elements)
+        {
+            _elementRepository.Update(elements);
+        }
+        public void AddElements(params Element[] elements)
+        {
+            _elementRepository.Add(elements);
+        }
+        public void DeleteElements(params Element[] elements)
+        {
+            _elementRepository.Remove(elements);
+        }
+
 
         private bool disposed = false;
 

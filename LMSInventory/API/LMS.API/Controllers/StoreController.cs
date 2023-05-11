@@ -1,59 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 
 using LMS.API.BusinessLogicLayer.Interfaces;
 using LMS.API.DTOs.RequestDTOs;
-using LMS.API.DTOs.ResponseDTOs;
 using LMS.API.Exceptions;
 
 namespace LMS.API.Controllers
 {
+    [Authorize]
     [Route("lms/api")]
     [ApiController]
-    public class GatewayController : ControllerBase
+    public class StoreController : ControllerBase
     {
-        private readonly IStoreManager _productManager;
-        private readonly IJWTManager _jWTManager;
+        private readonly IStoreManager _storeManager;
 
-        public GatewayController(IStoreManager productManager, IJWTManager jWTManager)
+        public StoreController(IStoreManager storeManager)
         {
-            _productManager = productManager;
-            _jWTManager = jWTManager;
+            _storeManager = storeManager;
         }
 
-
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([Required] UserReqDTO user)
-        {
-            try
-            {
-                var token = _jWTManager.Authenticate(user);
-
-                if (token == null)
-                {
-                    return Unauthorized();
-                }
-
-                return Ok(token);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        //[Authorize]
         [HttpPost("getAllStores")]
         public IActionResult GetAllStores(int pageSize, int pageNumber)
         {
             try
             {
-                var stores = _productManager.GetAllStores(pageSize, pageNumber);
+                var stores = _storeManager.GetAllStores(pageSize, pageNumber);
 
                 return Ok(stores);
             }
@@ -69,13 +42,12 @@ namespace LMS.API.Controllers
             }
         }
 
-        //[Authorize]
         [HttpPost("getStoreById")]
         public IActionResult GetStoreById([Required] int id)
         {
             try
             {
-                var stores = _productManager.GetStoreById(id);
+                var stores = _storeManager.GetStoreById(id);
 
                 return Ok(stores);
             }
@@ -91,13 +63,12 @@ namespace LMS.API.Controllers
             }
         }
 
-        //[Authorize]
         [HttpPost("saveStore")]
         public IActionResult SaveStore([Required] StoreReqDTO reqDTO)
         {
             try
             {
-                var store = _productManager.SaveStore(reqDTO);
+                var store = _storeManager.SaveStore(reqDTO);
 
                 return Ok(store);
             }
@@ -113,13 +84,12 @@ namespace LMS.API.Controllers
             }
         }
 
-        //[Authorize]
         [HttpPost("editStore")]
         public IActionResult EditStore([Required] StoreReqDTO reqDTO)
         {
             try
             {
-                var store = _productManager.EditStore(reqDTO);
+                var store = _storeManager.EditStore(reqDTO);
 
                 return Ok(store);
             }
@@ -140,7 +110,7 @@ namespace LMS.API.Controllers
         {
             try
             {
-                var response = _productManager.DeleteStore(id);
+                var response = _storeManager.DeleteStore(id);
 
                 return Ok(response);
             }

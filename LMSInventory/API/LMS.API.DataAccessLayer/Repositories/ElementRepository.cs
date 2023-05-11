@@ -4,7 +4,7 @@ using LMS.API.DataAccessLayer.Models;
 
 namespace LMS.API.DataAccessLayer.Repositories
 {
-    public class StoreRepository : GenericDataRepository<Store>, IStoreRepository
+    public class ElementRepository : GenericDataRepository<Element>, IElementRepository
     {
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -22,7 +22,7 @@ namespace LMS.API.DataAccessLayer.Repositories
             }
         }
 
-        ~StoreRepository()
+        ~ElementRepository()
         {
             Dispose(false);
         }
