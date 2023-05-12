@@ -96,6 +96,7 @@ namespace LMS.API.BusinessLogicLayer.Managers
                 throw new RackException(RackExceptions.WrongRackInfo);
 
             rackToBeDeleted.EntityState = EntityState.Deleted;
+            rackToBeDeleted.Store.EntityState = EntityState.Modified;
 
             _dataAccessService.DeleteRacks(rackToBeDeleted);
 

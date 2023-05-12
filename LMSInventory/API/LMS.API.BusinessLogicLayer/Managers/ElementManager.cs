@@ -81,6 +81,7 @@ namespace LMS.API.BusinessLogicLayer.Managers
             elementToBeUpdated.Width = reqDTO.Width;
             elementToBeUpdated.EntityState = EntityState.Modified;
             elementToBeUpdated.Rack.EntityState = EntityState.Modified;
+            elementToBeUpdated.Rack.Store.EntityState = EntityState.Modified;
 
             _dataAccessService.UpdateElements(elementToBeUpdated);
 
@@ -98,6 +99,7 @@ namespace LMS.API.BusinessLogicLayer.Managers
 
             elementToBeDeleted.EntityState = EntityState.Deleted;
             elementToBeDeleted.Rack.EntityState = EntityState.Modified;
+            elementToBeDeleted.Rack.Store.EntityState = EntityState.Modified;
 
             _dataAccessService.DeleteElements(elementToBeDeleted);
 

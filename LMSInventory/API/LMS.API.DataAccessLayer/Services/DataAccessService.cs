@@ -79,15 +79,15 @@ namespace LMS.API.DataAccessLayer.Services
 
         public IQueryable<Element> GetAllElements()
         {
-            return _elementRepository.GetAll().Include(e => e.Rack);
+            return _elementRepository.GetAll().Include(e => e.Rack).Include("Rack.Store");
         }
         public IQueryable<Element> GetAllElements(int pageSize, int pageNumber)
         {
-            return _elementRepository.GetAll().Include(e => e.Rack).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return _elementRepository.GetAll().Include(e => e.Rack).Include("Rack.Store").Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
         public Element GetElementById(int id)
         {
-            return _elementRepository.GetAll().Include(e => e.Rack).Where(x => x.Id == id).FirstOrDefault();
+            return _elementRepository.GetAll().Include(e => e.Rack).Include("Rack.Store").Where(x => x.Id == id).FirstOrDefault();
         }
         public void UpdateElements(params Element[] elements)
         {

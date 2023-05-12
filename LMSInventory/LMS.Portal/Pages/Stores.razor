@@ -1,6 +1,8 @@
 ﻿@page "/stores"
 @using Newtonsoft.Json;
 @inject HttpClientHelper Http
+@inject SweetAlertService Swal
+@inject NavigationManager _navigationManager
 
 <PageTitle>Stores</PageTitle>
 
@@ -37,7 +39,7 @@ else
                                 <NavLink class="m-2" href="">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href= @onclick="() => DeleteStore(store)">
                                     <span class="oi oi-circle-x" aria-hidden="true"></span>
                                 </NavLink>
                             </div>
@@ -60,10 +62,10 @@ else
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href=>
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href= @onclick="() => DeleteStore(store)">
                                     <span class="oi oi-circle-x" aria-hidden="true"></span>
                                 </NavLink>
                             </div>
@@ -92,5 +94,36 @@ else
 
         var result = resp.Content.ReadAsStringAsync().Result;
         stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
+    }
+
+    private async void DeleteStore(StoreResDTO store)
+    {
+        SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
+            {
+              Title = "Are you sure?",
+              Text = "You will not be able to recover "+store.Name+"!",
+              Icon = SweetAlertIcon.Warning,
+              ShowCancelButton = true,
+              ConfirmButtonText = "Yes, delete it!",
+              CancelButtonText = "No, keep it."
+            });
+
+        if (!string.IsNullOrEmpty(result.Value))
+        {
+
+            var resp = await Http.Post(Constants.APIEndpoints.DELETE_STORE+"?id="+store.Id, "", true);
+            if (resp.IsSuccessStatusCode)
+            {
+                await Swal.FireAsync("Deleted", store.Name + " has been deleted!", SweetAlertIcon.Success);
+            }
+            else
+            {
+                string resFailed = resp.Content.ReadAsStringAsync().Result;
+                FailedResponseDTO failed = JsonConvert.DeserializeObject<FailedResponseDTO>(resFailed); 
+                await Swal.FireAsync("Error", "Couldn't Delete "+store.Name , SweetAlertIcon.Error);     
+            }
+        }
+        _navigationManager.NavigateTo("stores", true);
+    
     }
 }
