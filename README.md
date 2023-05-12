@@ -43,3 +43,13 @@
 <p align="center">
   <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/home_hover.png">
 </p>
+
+## Stores
+<p align="center">
+  <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/stores.png">
+</p>
+
+## Add Elemnet
+<p align="center">
+  <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/addElement.png">
+</p>
