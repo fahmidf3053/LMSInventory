@@ -78,6 +78,7 @@ namespace LMS.API.BusinessLogicLayer.Managers
 
             rackToBeUpdated.Name = reqDTO.Name;
             rackToBeUpdated.QuantityOfRacks = reqDTO.QuantityOfRacks;
+            rackToBeUpdated.Store = _dataAccessService.GetStoreById(reqDTO.StoreId);
             rackToBeUpdated.EntityState = EntityState.Modified;
             rackToBeUpdated.Store.EntityState = EntityState.Modified;
 

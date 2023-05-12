@@ -76,9 +76,12 @@ namespace LMS.API.BusinessLogicLayer.Managers
             if (elementToBeUpdated == null)
                 throw new ElementException(ElementExceptions.WrongElementInfo);
 
+            ValidateElementReqDTO(reqDTO);
+
             elementToBeUpdated.Name = reqDTO.Name;
             elementToBeUpdated.Height = reqDTO.Height;
             elementToBeUpdated.Width = reqDTO.Width;
+            elementToBeUpdated.Rack = _dataAccessService.GetRackById(reqDTO.RackId);
             elementToBeUpdated.EntityState = EntityState.Modified;
             elementToBeUpdated.Rack.EntityState = EntityState.Modified;
             elementToBeUpdated.Rack.Store.EntityState = EntityState.Modified;
