@@ -1,6 +1,6 @@
 ﻿@page "/"
-@inject HttpClient Http
-@using LMS.API.DTOs.ResponseDTOs;
+@using Newtonsoft.Json;
+@inject HttpClientHelper Http
 
 <PageTitle>Home</PageTitle>
 
@@ -12,10 +12,10 @@ else
 {
     <div class="xmlComp flex-column fw-bold mb-3 p-1">
         <div>&lt;Stores&gt;</div>
-            @foreach (var store in stores)
-            {
-                <StoreComponent Store=store />
-            }
+        @foreach (var store in stores)
+        {
+            <StoreComponent Store=store />
+        }
         <div>&lt;/Stores&gt;</div>
     </div>
 }
@@ -25,6 +25,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        stores = await Http.GetFromJsonAsync<StoreResDTO[]>("sample-data/store.json");
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_STORES, "", true);
+        resp.EnsureSuccessStatusCode();
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+        stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
     }
 }
