@@ -3,6 +3,7 @@
 
 @inject HttpClientHelper Http
 @inject SweetAlertService Swal
+@inject NavigationManager _navigationManager
 
 <PageTitle>Add Store</PageTitle>
 
@@ -55,8 +56,11 @@
         {
             var addedStore = JsonConvert.DeserializeObject<StoreResDTO>(result);
 
-            Store = new();
-            await Swal.FireAsync("Success", addedStore.Name + " added successfully!", "success");
+            Store = new StoreReqDTO();
+            SweetAlertResult saRes = await Swal.FireAsync("Success", addedStore.Name + " added successfully!", "success");
+
+            if (!string.IsNullOrEmpty(saRes.Value))
+                _navigationManager.NavigateTo("addrack", true);
         }
         else
         {

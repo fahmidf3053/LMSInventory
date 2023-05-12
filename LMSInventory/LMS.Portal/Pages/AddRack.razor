@@ -1,0 +1,101 @@
+﻿@page "/addrack"
+@using Newtonsoft.Json;
+
+@inject HttpClientHelper Http
+@inject SweetAlertService Swal
+@inject NavigationManager _navigationManager
+
+<PageTitle>Add Rack</PageTitle>
+
+@if (stores == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="text-center">
+        <h1>Add Store</h1>
+    </div>
+
+    <EditForm Model=@Rack OnValidSubmit=@HandleValidSubmit>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="card p-5 m-5">
+            <div class="form-group d-flex  my-2">
+                <div class="col-2 fw-bold">
+                    <label for="Name">Name:</label>
+                </div>
+                <div class="col-4">
+                    <InputText @bind-Value=Rack.Name class="form-control" id="Name" />
+                </div>
+            </div>
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="QuantityOfRacks">Quantity:</label>
+                </div>
+                <div class="col-4">
+                    <InputNumber @bind-Value=Rack.QuantityOfRacks class="form-control" id="QuantityOfRacks" />
+                </div>
+            </div>
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="StoreId">Select Store:</label>
+                </div>
+                <div class="col-4">
+                    <select class="form-control" @bind=Rack.StoreId>
+                        @foreach (var store in stores)
+                        {
+                            <option value="@store.Id"> @store.Name </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary my-3 col-1 align-self-center" value="Add" />
+        </div>
+    </EditForm>
+}
+
+
+
+@code {
+    private RackReqDTO Rack = new();
+    private StoreResDTO[] stores;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_STORES, "", true);
+        resp.EnsureSuccessStatusCode();
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+        stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
+    }
+
+    private async void HandleValidSubmit(EditContext editContext)
+    {
+        var resp = await Http.Post(Constants.APIEndpoints.SAVE_RACK, Rack, true);
+
+        if (resp == null)
+        {
+            await Swal.FireAsync("Oops...", "Server Error!", "error");
+            return;
+        }
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+
+        if (resp.IsSuccessStatusCode)
+        {
+            var addedRack = JsonConvert.DeserializeObject<RackResDTO>(result);
+
+            Rack = new RackReqDTO();
+            SweetAlertResult saRes = await Swal.FireAsync("Success", addedRack.Name + " added successfully!", "success");
+
+            if (!string.IsNullOrEmpty(saRes.Value))
+                _navigationManager.NavigateTo("addrack", true);
+        }
+        else
+        {
+            var failedResponse = JsonConvert.DeserializeObject<FailedResponseDTO>(result);
+            await Swal.FireAsync("Oops...", failedResponse.Detail, "error");
+        }
+    }
+}

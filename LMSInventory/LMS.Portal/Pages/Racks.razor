@@ -1,14 +1,14 @@
-﻿@page "/stores"
+﻿@page "/racks"
 @using Newtonsoft.Json;
 @inject HttpClientHelper Http
 
-<PageTitle>Stores</PageTitle>
+<PageTitle>Racks</PageTitle>
 
 <div class="text-center">
-    <h1>Available Stores</h1>
+    <h1>Available Racks</h1>
 </div>
 
-@if (stores == null)
+@if (racks == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -18,21 +18,23 @@ else
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Country</th>
-                <th>Racks</th>
+                <th>Store</th>
+                <th>Quantity</th>
+                <th>Elements</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var store in stores)
+            @foreach (var rack in racks)
             {
-                @if (store.Racks.Count > 0)
+                @if (rack.Elements.Count > 0)
                 {
                     <tr>
-                        <td rowspan=@store.Racks.Count>@store.Name</td>
-                        <td rowspan=@store.Racks.Count>@store.Country</td>
-                        <td> @store.Racks[0].Name</td>
-                        <td rowspan=@store.Racks.Count>
+                        <td rowspan=@rack.Elements.Count>@rack.Name</td>
+                        <td rowspan=@rack.Elements.Count>@rack.StoreName</td>
+                        <td rowspan=@rack.Elements.Count>@rack.QuantityOfRacks</td>
+                        <td> @rack.Elements[0].Name</td>
+                        <td rowspan=@rack.Elements.Count>
                             <div class="d-flex justify-content-center">
                                 <NavLink class="m-2" href="">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
@@ -43,11 +45,11 @@ else
                             </div>
                         </td>
                     </tr>
-                    @foreach (var rack in store.Racks.Skip(1))
+                    @foreach (var element in rack.Elements.Skip(1))
                     {
                         <tr>
                             <td>
-                                @rack.Name
+                                @element.Name
                             </td>
                         </tr>
                     }
@@ -55,8 +57,9 @@ else
                 else
                 {
                     <tr>
-                        <td>@store.Name</td>
-                        <td>@store.Country</td>
+                        <td>@rack.Name</td>
+                        <td>@rack.StoreName</td>
+                        <td>@rack.QuantityOfRacks</td>
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-center">
@@ -72,8 +75,8 @@ else
                 }
             }
             <tr>
-                <td colspan="4">
-                    <NavLink href="addstore">
+                <td colspan="5">
+                    <NavLink href="addrack">
                         <span class="oi oi-plus" aria-hidden="true"></span>
                     </NavLink>
                 </td>
@@ -83,14 +86,14 @@ else
 }
 
 @code {
-    private StoreResDTO[]? stores;
+    private RackResDTO[]? racks;
 
     protected override async Task OnInitializedAsync()
     {
-        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_STORES, "", true);
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_RACKS, "", true);
         resp.EnsureSuccessStatusCode();
 
         var result = resp.Content.ReadAsStringAsync().Result;
-        stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
+        racks = JsonConvert.DeserializeObject<RackResDTO[]>(result);
     }
 }
