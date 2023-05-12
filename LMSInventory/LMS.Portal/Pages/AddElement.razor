@@ -51,6 +51,7 @@ else
                 </div>
                 <div class="col-4">
                     <select class="form-control" @bind=Element.RackId>
+                        <option value="0">Select Rack</option>
                         @foreach (var rack in Racks)
                         {
                             <option value="@rack.Id"> @rack.Name </option>

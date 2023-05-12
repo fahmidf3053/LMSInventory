@@ -43,6 +43,7 @@ else
                 </div>
                 <div class="col-4">
                     <select class="form-control" @bind=Rack.StoreId>
+                        <option value="0">Select Store</option>
                         @foreach (var store in stores)
                         {
                             <option value="@store.Id"> @store.Name </option>
