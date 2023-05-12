@@ -1,23 +1,23 @@
-﻿@page "/addrack"
+﻿@page "/addelement"
 @using Newtonsoft.Json;
 
 @inject HttpClientHelper Http
 @inject SweetAlertService Swal
 @inject NavigationManager _navigationManager
 
-<PageTitle>Add Rack</PageTitle>
+<PageTitle>Add Element</PageTitle>
 
-@if (stores == null)
+@if (Racks == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
     <div class="text-center">
-        <h1>Add Rack</h1>
+        <h1>Add Element</h1>
     </div>
 
-    <EditForm Model=@Rack OnValidSubmit=@HandleValidSubmit>
+    <EditForm Model=@Element OnValidSubmit=@HandleValidSubmit>
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="card p-5 m-5">
@@ -26,26 +26,34 @@ else
                     <label for="Name">Name:</label>
                 </div>
                 <div class="col-4">
-                    <InputText @bind-Value=Rack.Name class="form-control" id="Name" />
+                    <InputText @bind-Value=Element.Name class="form-control" id="Name" />
                 </div>
             </div>
             <div class="form-group d-flex my-2">
                 <div class="col-2 fw-bold">
-                    <label for="QuantityOfRacks">Quantity:</label>
+                    <label for="Height">Height:</label>
                 </div>
                 <div class="col-4">
-                    <InputNumber @bind-Value=Rack.QuantityOfRacks class="form-control" id="QuantityOfRacks" />
+                    <InputNumber @bind-Value=Element.Height class="form-control" id="Height" />
+                </div>
+            </div>       
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="Width">Width:</label>
+                </div>
+                <div class="col-4">
+                    <InputNumber @bind-Value=Element.Width class="form-control" id="Width" />
                 </div>
             </div>
             <div class="form-group d-flex my-2">
                 <div class="col-2 fw-bold">
-                    <label for="StoreId">Select Store:</label>
+                    <label for="RackId">Select Rack:</label>
                 </div>
                 <div class="col-4">
-                    <select class="form-control" @bind=Rack.StoreId>
-                        @foreach (var store in stores)
+                    <select class="form-control" @bind=Element.RackId>
+                        @foreach (var rack in Racks)
                         {
-                            <option value="@store.Id"> @store.Name </option>
+                            <option value="@rack.Id"> @rack.Name </option>
                         }
                     </select>
                 </div>
@@ -58,21 +66,21 @@ else
 
 
 @code {
-    private RackReqDTO Rack = new();
-    private StoreResDTO[] stores;
+    private ElementReqDTO Element = new();
+    private RackResDTO[] Racks;
 
     protected override async Task OnInitializedAsync()
     {
-        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_STORES, "", true);
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_RACKS, "", true);
         resp.EnsureSuccessStatusCode();
 
         var result = resp.Content.ReadAsStringAsync().Result;
-        stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
+        Racks = JsonConvert.DeserializeObject<RackResDTO[]>(result);
     }
 
     private async void HandleValidSubmit(EditContext editContext)
     {
-        var resp = await Http.Post(Constants.APIEndpoints.SAVE_RACK, Rack, true);
+        var resp = await Http.Post(Constants.APIEndpoints.SAVE_ELEMENT, Element, true);
 
         if (resp == null)
         {
@@ -84,13 +92,13 @@ else
 
         if (resp.IsSuccessStatusCode)
         {
-            var addedRack = JsonConvert.DeserializeObject<RackResDTO>(result);
+            var addedElement = JsonConvert.DeserializeObject<ElementResDTO>(result);
 
-            Rack = new RackReqDTO();
-            SweetAlertResult saRes = await Swal.FireAsync("Success", addedRack.Name + " added successfully!", "success");
+            Element = new ElementReqDTO();
+            SweetAlertResult saRes = await Swal.FireAsync("Success", addedElement.Name + " added successfully!", "success");
 
             if (!string.IsNullOrEmpty(saRes.Value))
-                _navigationManager.NavigateTo("addrack", true);
+                _navigationManager.NavigateTo("addelement", true);
         }
         else
         {

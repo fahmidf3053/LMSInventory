@@ -60,7 +60,7 @@
             SweetAlertResult saRes = await Swal.FireAsync("Success", addedStore.Name + " added successfully!", "success");
 
             if (!string.IsNullOrEmpty(saRes.Value))
-                _navigationManager.NavigateTo("addrack", true);
+                _navigationManager.NavigateTo("addstore", true);
         }
         else
         {

@@ -22,6 +22,12 @@ namespace LMS.Portal.Helper
             public static string SAVE_RACK = "lms/api/saveRack";
             public static string EDIT_RACK = "lms/api/editRack";
             public static string DELETE_RACK = "lms/api/deleteRack";
+
+            public static string GET_ALL_ELEMENTS = "lms/api/getAllElements";
+            public static string GET_ELEMENT_BY_ID = "lms/api/getElementById";
+            public static string SAVE_ELEMENT = "lms/api/saveElement";
+            public static string EDIT_ELEMENT = "lms/api/editElement";
+            public static string DELETE_ELEMENT = "lms/api/deleteElement";
         }
     }
 }
