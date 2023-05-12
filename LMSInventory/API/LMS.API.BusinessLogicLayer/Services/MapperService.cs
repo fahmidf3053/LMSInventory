@@ -32,6 +32,7 @@ namespace LMS.API.BusinessLogicLayer.Services
                 Name = rack.Name,
                 QuantityOfRacks = rack.QuantityOfRacks,
                 StoreName = rack.Store.Name,
+                StoreId = rack.Store.Id,
                 Elements = rack.Elements.Select(ToElementResDTOMap).ToList()
             };
         }
@@ -47,7 +48,8 @@ namespace LMS.API.BusinessLogicLayer.Services
                 Name = element.Name,
                 Height = element.Height,
                 Width = element.Width,
-                RackName = element.Rack.Name
+                RackName = element.Rack.Name,
+                RackId = element.Rack.Id
             };
         }
 
