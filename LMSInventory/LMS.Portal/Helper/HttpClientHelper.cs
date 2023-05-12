@@ -8,7 +8,7 @@ namespace LMS.Portal.Helper
 {
     public class HttpClientHelper
     {
-        public async Task<HttpResponseMessage> Post(string endpoint, string body, bool isAuthNeeded = false)
+        public async Task<HttpResponseMessage> Post(string endpoint, object body, bool isAuthNeeded = false)
         {
             try
             {

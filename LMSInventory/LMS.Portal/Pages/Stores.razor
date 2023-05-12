@@ -1,0 +1,96 @@
+﻿@page "/stores"
+@using Newtonsoft.Json;
+@inject HttpClientHelper Http
+
+<PageTitle>Stores</PageTitle>
+
+<div class="text-center">
+    <h1>Available Stores</h1>
+</div>
+
+@if (stores == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Racks</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var store in stores)
+            {
+                @if (store.Racks.Count > 0)
+                {
+                    <tr>
+                        <td rowspan=@store.Racks.Count>@store.Name</td>
+                        <td rowspan=@store.Racks.Count>@store.Country</td>
+                        <td> @store.Racks[0].Name</td>
+                        <td rowspan=@store.Racks.Count>
+                            <div class="d-flex justify-content-center">
+                                <NavLink class="m-2" href="">
+                                    <span class="oi oi-pencil" aria-hidden="true"></span>
+                                </NavLink>
+                                <NavLink class="m-2" href="">
+                                    <span class="oi oi-circle-x" aria-hidden="true"></span>
+                                </NavLink>
+                            </div>
+                        </td>
+                    </tr>
+                    @foreach (var rack in store.Racks.Skip(1))
+                    {
+                        <tr>
+                            <td>
+                                @rack.Name
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>@store.Name</td>
+                        <td>@store.Country</td>
+                        <td></td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <NavLink class="m-2" href="">
+                                    <span class="oi oi-pencil" aria-hidden="true"></span>
+                                </NavLink>
+                                <NavLink class="m-2" href="">
+                                    <span class="oi oi-circle-x" aria-hidden="true"></span>
+                                </NavLink>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td colspan="4">
+                    <NavLink href="">
+                        <span class="oi oi-plus" aria-hidden="true"></span>
+                    </NavLink>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private StoreResDTO[]? stores;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_STORES, "", true);
+        resp.EnsureSuccessStatusCode();
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+        stores = JsonConvert.DeserializeObject<StoreResDTO[]>(result);
+    }
+}

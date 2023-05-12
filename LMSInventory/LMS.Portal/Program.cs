@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 using LMS.Portal;
 using LMS.Portal.Helper;
-using LMS.API.DTOs.RequestDTOs;
+using CurrieTechnologies.Razor.SweetAlert2;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -14,5 +14,6 @@ builder.Configuration.Bind("UserInfo", Constants.user);
 
 
 builder.Services.AddScoped<HttpClientHelper>();
+builder.Services.AddSweetAlert2();
 
 await builder.Build().RunAsync();
