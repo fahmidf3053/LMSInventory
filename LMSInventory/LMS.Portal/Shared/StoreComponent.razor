@@ -1,0 +1,19 @@
+﻿@using LMS.API.DTOs.ResponseDTOs;
+
+<div class="xmlCompStore flex-column ms-5 p-1">
+    <div>&lt;Store Name="@Store.Name" Country="@Store.Country" &gt;</div>
+    <div class="ms-5">
+        <div>&lt;Racks&gt;</div>
+        @foreach (var rack in Store.Racks)
+        {
+            <RackComponent Rack=rack />
+        }
+        <div>&lt;/Racks&gt;</div>
+    </div>
+    <div>&lt;/Store&gt;</div>
+</div>
+
+@code {
+    [Parameter]
+    public StoreResDTO Store { get; set; }
+}

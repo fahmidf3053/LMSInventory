@@ -1,0 +1,19 @@
+﻿@using LMS.API.DTOs.ResponseDTOs;
+
+<div class="xmlCompRack flex-column ms-5 p-1">
+    <div>&lt;Rack Name="@Rack.Name" QuantityOfRacks="@Rack.QuantityOfRacks" TotalElements="@Rack.Elements.Count" &gt;</div>
+    <div class="ms-5">
+        <div>&lt;Elements&gt;</div>
+        @foreach (var element in Rack.Elements)
+        {
+            <ElementComponent Element=element />
+        }
+        <div>&lt;/Elements&gt;</div>
+    </div>
+    <div>&lt;/Rack&gt;</div>
+</div>
+
+@code {
+    [Parameter]
+    public RackResDTO Rack { get; set; }
+}

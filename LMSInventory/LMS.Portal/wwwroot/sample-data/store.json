@@ -1,0 +1,85 @@
+﻿[
+  {
+    "id": 2,
+    "name": "LMS Store 2",
+    "country": "SA",
+    "racks": [
+      {
+        "id": 3,
+        "name": "A45",
+        "quantityOfRacks": 4,
+        "storeName": "LMS Store 2",
+        "elements": [
+          {
+            "id": 6,
+            "name": "Glass",
+            "height": 100,
+            "width": 60,
+            "rackName": "A45"
+          },
+          {
+            "id": 7,
+            "name": "Door",
+            "height": 600,
+            "width": 200,
+            "rackName": "A45"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "LMS Store 3",
+    "country": "BD",
+    "racks": []
+  },
+  {
+    "id": 4,
+    "name": "LMS Store 4",
+    "country": "USA",
+    "racks": []
+  },
+  {
+    "id": 5,
+    "name": "LMS Store 5",
+    "country": "JP",
+    "racks": []
+  },
+  {
+    "id": 7,
+    "name": "LMS Store 1",
+    "country": "UK",
+    "racks": [
+      {
+        "id": 6,
+        "name": "A52",
+        "quantityOfRacks": 4,
+        "storeName": "LMS Store 1",
+        "elements": [
+          {
+            "id": 10,
+            "name": "Door 122",
+            "height": 1200,
+            "width": 800,
+            "rackName": "A52"
+          },
+          {
+            "id": 11,
+            "name": "Door 211",
+            "height": 1200,
+            "width": 800,
+            "rackName": "A52"
+          },
+          {
+            "id": 12,
+            "name": "Door 121212",
+            "height": 1200,
+            "width": 800,
+            "rackName": "A52"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+﻿@using LMS.API.DTOs.ResponseDTOs;
+
+<div class="xmlCompElement flex-column ms-5 p-1">
+    <div>&lt;Element Element="@Element.Name" Width="@Element.Width" Height="@Element.Height" /&gt;</div>
+</div>
+
+@code {
+    [Parameter]
+    public ElementResDTO Element { get; set; }
+}

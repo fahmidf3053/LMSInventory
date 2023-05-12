@@ -59,6 +59,39 @@ a, .btn-link {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.xmlComp {
+    background-color: #f2f2f2;
+}
+
+.xmlComp:hover {
+ 
+    background-color: #badce8;
+}
+
+.xmlCompStore {
+    background-color: #dcdedc;
+}
+
+.xmlCompStore:hover {
+    background-color: #fff;
+}
+
+.xmlCompRack {
+    background-color: #f2f2f2;
+}
+
+.xmlCompRack:hover {
+    background-color: #badce8;
+}
+
+.xmlCompElement {
+    background-color: #dcdedc;
+}
+
+.xmlCompElement:hover {
+    background-color: #fff;
+}
