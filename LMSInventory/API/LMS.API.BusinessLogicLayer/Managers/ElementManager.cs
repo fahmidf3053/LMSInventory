@@ -85,6 +85,8 @@ namespace LMS.API.BusinessLogicLayer.Managers
             elementToBeUpdated.EntityState = EntityState.Modified;
             elementToBeUpdated.Rack.EntityState = EntityState.Modified;
             elementToBeUpdated.Rack.Store.EntityState = EntityState.Modified;
+            elementToBeUpdated.Rack.Elements = null;
+            elementToBeUpdated.Rack.Store.Racks = null;
 
             _dataAccessService.UpdateElements(elementToBeUpdated);
 

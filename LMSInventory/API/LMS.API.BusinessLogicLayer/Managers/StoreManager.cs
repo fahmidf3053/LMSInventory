@@ -78,6 +78,7 @@ namespace LMS.API.BusinessLogicLayer.Managers
             storeToBeUpdated.Name = reqDTO.Name;
             storeToBeUpdated.Country = reqDTO.Country;
             storeToBeUpdated.EntityState = EntityState.Modified;
+            storeToBeUpdated.Racks = null;
 
             _dataAccessService.UpdateStores(storeToBeUpdated);
 

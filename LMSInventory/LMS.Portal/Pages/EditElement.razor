@@ -1,0 +1,118 @@
+﻿@page "/editelement/{elementId:int}"
+@using Newtonsoft.Json;
+
+@inject HttpClientHelper Http
+@inject SweetAlertService Swal
+@inject NavigationManager _navigationManager
+
+<PageTitle>Edit Element</PageTitle>
+
+@if (Racks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="text-center">
+        <h1>Edit Element</h1>
+    </div>
+
+    <EditForm Model=@Element OnValidSubmit=@HandleValidSubmit>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="card p-5 m-5">
+            <div class="form-group d-flex  my-2">
+                <div class="col-2 fw-bold">
+                    <label for="Name">Name:</label>
+                </div>
+                <div class="col-4">
+                    <InputText @bind-Value=Element.Name class="form-control" id="Name" />
+                </div>
+            </div>
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="Height">Height:</label>
+                </div>
+                <div class="col-4">
+                    <InputNumber @bind-Value=Element.Height class="form-control" id="Height" />
+                </div>
+            </div>       
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="Width">Width:</label>
+                </div>
+                <div class="col-4">
+                    <InputNumber @bind-Value=Element.Width class="form-control" id="Width" />
+                </div>
+            </div>
+            <div class="form-group d-flex my-2">
+                <div class="col-2 fw-bold">
+                    <label for="RackId">Select Rack:</label>
+                </div>
+                <div class="col-4">
+                    <select class="form-control" @bind=Element.RackId>
+                        @foreach (var rack in Racks)
+                        {
+                            <option value="@rack.Id"> @rack.Name </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary my-3 col-1 align-self-center" value="Update" />
+        </div>
+    </EditForm>
+}
+
+
+
+@code {
+    [Parameter]
+    public int elementId { get; set; }
+
+    private ElementReqDTO Element;
+    private RackResDTO[] Racks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var respElement = await Http.Post(Constants.APIEndpoints.GET_ELEMENT_BY_ID + "?id=" + elementId, "", true);
+        respElement.EnsureSuccessStatusCode();
+
+        var resultElement = respElement.Content.ReadAsStringAsync().Result;
+        Element = JsonConvert.DeserializeObject<ElementReqDTO>(resultElement);
+
+        var resp = await Http.Post(Constants.APIEndpoints.GET_ALL_RACKS, "", true);
+        resp.EnsureSuccessStatusCode();
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+        Racks = JsonConvert.DeserializeObject<RackResDTO[]>(result);
+    }
+
+    private async void HandleValidSubmit(EditContext editContext)
+    {
+        var resp = await Http.Post(Constants.APIEndpoints.EDIT_ELEMENT, Element, true);
+
+        if (resp == null)
+        {
+            await Swal.FireAsync("Oops...", "Server Error!", "error");
+            return;
+        }
+
+        var result = resp.Content.ReadAsStringAsync().Result;
+
+        if (resp.IsSuccessStatusCode)
+        {
+            var updated = JsonConvert.DeserializeObject<ElementResDTO>(result);
+
+            Element = new ElementReqDTO();
+            SweetAlertResult saRes = await Swal.FireAsync("Success", updated.Name + " updated successfully!", "success");
+
+            if (!string.IsNullOrEmpty(saRes.Value))
+                _navigationManager.NavigateTo("elements", true);
+        }
+        else
+        {
+            var failedResponse = JsonConvert.DeserializeObject<FailedResponseDTO>(result);
+            await Swal.FireAsync("Oops...", failedResponse.Detail, "error");
+        }
+    }
+}

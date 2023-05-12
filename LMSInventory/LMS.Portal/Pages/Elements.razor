@@ -36,7 +36,7 @@ else
                     <td>@element.Width</td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <NavLink class="m-2" href="">
+                            <NavLink class="m-2" href= @onclick="() => EditElement(element)">
                                 <span class="oi oi-pencil" aria-hidden="true"></span>
                             </NavLink>
                             <NavLink class="m-2" href= @onclick="() => DeleteElement(element)">
@@ -99,5 +99,10 @@ else
         }
         _navigationManager.NavigateTo("elements", true);
 
+    }
+
+    private async void EditElement(ElementResDTO element)
+    {        
+        _navigationManager.NavigateTo($"editelement/{element.Id}", true);   
     }
 }

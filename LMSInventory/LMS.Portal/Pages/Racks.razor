@@ -38,7 +38,7 @@ else
                         <td> @rack.Elements[0].Name</td>
                         <td rowspan=@rack.Elements.Count>
                             <div class="d-flex justify-content-center">
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href= @onclick="() => EditRack(rack)">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
                                 <NavLink class="m-2" href= @onclick="() => DeleteRack(rack)">
@@ -65,7 +65,7 @@ else
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href= @onclick="() => EditRack(rack)">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
                                 <NavLink class="m-2" href= @onclick="() => DeleteRack(rack)">
@@ -128,5 +128,10 @@ else
         }
         _navigationManager.NavigateTo("racks", true);
 
+    }
+
+    private async void EditRack(RackResDTO rack)
+    {        
+        _navigationManager.NavigateTo($"editrack/{rack.Id}", true);   
     }
 }

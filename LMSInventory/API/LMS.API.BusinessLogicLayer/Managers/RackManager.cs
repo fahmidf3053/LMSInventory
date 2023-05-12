@@ -76,11 +76,16 @@ namespace LMS.API.BusinessLogicLayer.Managers
             if (rackToBeUpdated == null)
                 throw new RackException(RackExceptions.WrongRackInfo);
 
+            if (rackToBeUpdated.Elements.Count > reqDTO.QuantityOfRacks)
+                throw new RackException(RackExceptions.WrongQuantity);
+
             rackToBeUpdated.Name = reqDTO.Name;
             rackToBeUpdated.QuantityOfRacks = reqDTO.QuantityOfRacks;
             rackToBeUpdated.Store = _dataAccessService.GetStoreById(reqDTO.StoreId);
             rackToBeUpdated.EntityState = EntityState.Modified;
             rackToBeUpdated.Store.EntityState = EntityState.Modified;
+            rackToBeUpdated.Store.Racks = null;
+            rackToBeUpdated.Elements = null;
 
             _dataAccessService.UpdateRacks(rackToBeUpdated);
 

@@ -27,6 +27,9 @@
             {
                 "WrongRackInfo", new List<string>(){"400", "Bad Request", "Wrong Rack Info." }
             },
+                        {
+                "WrongQuantity", new List<string>(){"400", "Bad Request", "Quantity Can not be less than TotalElement." }
+            },
             {
                 "RackDeleteFailed", new List<string>(){"400", "Bad Request", "Couldn't Delete the Rack." }
             },
@@ -42,6 +45,7 @@
         public const string RackSaveFailed = "RackSaveFailed";
         public const string InvalidStore = "InvalidStore";
         public const string WrongRackInfo = "WrongRackInfo";
+        public const string WrongQuantity = "WrongQuantity";
         public const string RackDeleteFailed = "RackDeleteFailed";
         public const string UnhandledError = "UnhandledError";
     }

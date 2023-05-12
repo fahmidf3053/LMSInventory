@@ -36,7 +36,7 @@ else
                         <td> @store.Racks[0].Name</td>
                         <td rowspan=@store.Racks.Count>
                             <div class="d-flex justify-content-center">
-                                <NavLink class="m-2" href="">
+                                <NavLink class="m-2" href= @onclick="() => EditStore(store)">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
                                 <NavLink class="m-2" href= @onclick="() => DeleteStore(store)">
@@ -62,7 +62,7 @@ else
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <NavLink class="m-2" href=>
+                                <NavLink class="m-2" href= @onclick="() => EditStore(store)">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>
                                 </NavLink>
                                 <NavLink class="m-2" href= @onclick="() => DeleteStore(store)">
@@ -125,5 +125,10 @@ else
         }
         _navigationManager.NavigateTo("stores", true);
     
+    }
+
+    private async void EditStore(StoreResDTO store)
+    {        
+        _navigationManager.NavigateTo($"editstore/{store.Id}", true);   
     }
 }
