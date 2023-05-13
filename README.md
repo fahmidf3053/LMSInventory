@@ -1,6 +1,8 @@
 # LMSInventory
 
 > A web app for managing inventory, using .net core and MS-SQL.
+> I have used Blazor WebAssembly for Front-End, .net core 6 for Back-End & MS-SQL Database
+> For api's security I have used JWT authentication and followed Code First approach In Entity Framework.
 
 ## Architecture Diagram of LMSInventory
 
