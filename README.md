@@ -62,8 +62,8 @@
 </p>
 
 # Testing the project
-## Please go the Add Store from the Navigation Menu and Add a Store.
-## Then please go to the Add Rack page from Nav Menu and add a Rack. Without Store you can not add any rack.
-## After adding the Rack, you can add an Element from Add Element option of  Nav menu.
-## Also you can Edit or Delete any component its corresponding list page such as Sotres, Racks and Elements. You will find Edit and Delete icon in the Action column.
-## Report page of the Nav menu is only for demo.
+## 1. Please go the Add Store from the Navigation Menu and Add a Store.
+## 2. Then please go to the Add Rack page from Nav Menu and add a Rack. Without Store you can not add any rack.
+## 3. After adding the Rack, you can add an Element to the Rack from Add Element option of  Nav menu.
+## 4. Also you can Edit or Delete any component its corresponding list page such as Sotres, Racks and Elements. You will find Edit and Delete icon in the Action column. If you delete any parent item it will delete all its child items too. For example, if you delete a particular store then it will also delete containing Racks and Elements. But if you delete any child item it won't effect the parent.
+## 5. Report page of the Nav menu is only for demo.
