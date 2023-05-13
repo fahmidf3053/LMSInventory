@@ -61,3 +61,9 @@
   <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/delete_Store.png">
 </p>
 
+# Testing the project
+## Please go the Add Store from the Navigation Menu and Add a Store.
+## Then please go to the Add Rack page from Nav Menu and add a Rack. Without Store you can not add any rack.
+## After adding the Rack, you can add an Element from Add Element option of  Nav menu.
+## Also you can Edit or Delete any component its corresponding list page such as Sotres, Racks and Elements. You will find Edit and Delete icon in the Action column.
+## Report page of the Nav menu is only for demo.
