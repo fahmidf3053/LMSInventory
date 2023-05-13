@@ -53,3 +53,9 @@
 <p align="center">
   <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/addElement.png">
 </p>
+
+## Delete Store
+<p align="center">
+  <img src="https://github.com/fahmidf3053/LMSInventory/blob/master/Documents/ScreenShots/delete_Store.png">
+</p>
+
