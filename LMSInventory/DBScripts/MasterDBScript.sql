@@ -5,14 +5,14 @@ BEGIN
 	ALTER DATABASE [LMSInventory] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
 END
 GO
-/****** Object:  Database [IDTPServerDB]    Script Date: 6/22/2021 11:04:14 PM ******/
+
 IF  EXISTS (SELECT 1 FROM sys.databases WHERE database_id = DB_ID(N'LMSInventory'))
 BEGIN
 	EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'LMSInventory'	
 	DROP DATABASE [LMSInventory]
 END
 GO
-/****** Object:  Database [LMSInventory]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 CREATE DATABASE [LMSInventory]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -94,7 +94,7 @@ ALTER DATABASE [LMSInventory] SET QUERY_STORE = OFF
 GO
 USE [LMSInventory]
 GO
-/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 5/11/2023 12:39:24 PM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,7 @@ CREATE TABLE [dbo].[__EFMigrationsHistory](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Element]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +126,7 @@ CREATE TABLE [dbo].[Element](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rack]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ GO
 CREATE TABLE [dbo].[Rack](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](200) NOT NULL,
-	[QuantityOfRack] [int] NOT NULL,
+	[QuantityOfRacks] [int] NOT NULL,
 	[StoreId] [int] NOT NULL,
 	[EntityState] [int] NOT NULL,
  CONSTRAINT [PK_Rack] PRIMARY KEY CLUSTERED 
@@ -143,7 +143,7 @@ CREATE TABLE [dbo].[Rack](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Store]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,13 +159,13 @@ CREATE TABLE [dbo].[Store](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Element_RackId]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 CREATE NONCLUSTERED INDEX [IX_Element_RackId] ON [dbo].[Element]
 (
 	[RackId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Rack_StoreId]    Script Date: 5/11/2023 12:34:11 PM ******/
+
 CREATE NONCLUSTERED INDEX [IX_Rack_StoreId] ON [dbo].[Rack]
 (
 	[StoreId] ASC
